@@ -94,11 +94,10 @@
 		}
 	},
 	"onCreateCommand": {
-		"velocitas": "bash .devcontainer/scripts/onCreateCommand.sh",
+		"velocitas": "bash .devcontainer/scripts/postCreateCommand.sh",
 		"LinguaFranca": "sudo mkdir -p /workspaces/.codespaces/.persistedshare/logs && sudo chmod -R 777 /workspaces/.codespaces/.persistedshare/logs"
 	},	
 	"postStartCommand": {
-		"velocitas": "bash .devcontainer/scripts/postStartCommand.sh",
 		"setup-user-env": ["/bin/bash", "-c", "(bash -i ./.devcontainer/scripts/setup-user-env.bash >> /workspaces/.codespaces/.persistedshare/logs/stdout-env.log 2>> /workspaces/.codespaces/.persistedshare/logs/stderr-env.log) || (echo setup-user-env exited with nonzero code)"],
 		"setup-lf": ["/bin/bash", "-c", "(bash ./.devcontainer/scripts/setup-lf.bash nightly >> /workspaces/.codespaces/.persistedshare/logs/stdout-lf.log 2>> /workspaces/.codespaces/.persistedshare/logs/stderr-lf.log) || (echo setup-lf exited with nonzero code)"]
 	},
