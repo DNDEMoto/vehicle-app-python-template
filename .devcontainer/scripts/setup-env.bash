@@ -12,9 +12,9 @@ if [ ! -f "/etc/debian_version" ]; then
     exit 1
 fi
 
-SETUP_NETWORK=true
-SETUP_ROS=true
-ROS_USE_OFFICIAL_REPO=true
+SETUP_NETWORK=false
+SETUP_ROS=false
+ROS_USE_OFFICIAL_REPO=false
 INSTALL_USER_DEPENDENCIES=false
 
 for arg in "$@"; do
