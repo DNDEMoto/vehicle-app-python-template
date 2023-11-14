@@ -384,3 +384,14 @@ venv/
 gen/
 helm/
 podspec.yaml
+
+# for LinguaFranca
+bin/
+.DS_Store
+src-gen
+fed-gen/*
+build/
+include
+lib
+share/
+lingua-franca/
