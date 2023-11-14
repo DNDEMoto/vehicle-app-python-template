@@ -27,4 +27,4 @@ RUN /bin/bash /tmp/scripts/container-set.sh
 RUN /bin/bash /tmp/scripts/configure-proxies.sh
 
 # for LinguaFranca
-RUN  /bin/bash /tmp/scriptssetup-env.bash
+RUN  /bin/bash /tmp/scripts/setup-env.bash
