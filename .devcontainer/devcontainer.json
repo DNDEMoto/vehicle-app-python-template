@@ -75,6 +75,7 @@
 			},
 			// Add the IDs of extensions you want installed when the container is created.
 			"extensions": [
+				"lf-lang.vscode-lingua-franca",
 				"dbaeumer.vscode-eslint",
 				"ms-azuretools.vscode-dapr",
 				"ms-azuretools.vscode-docker",
@@ -92,7 +93,22 @@
 			]
 		}
 	},
-	"onCreateCommand": "bash .devcontainer/scripts/postCreateCommand.sh",
+	"onCreateCommand": {
+		"velocitas": "bash .devcontainer/scripts/onCreateCommand.sh",
+		"LinguaFranca": "sudo mkdir -p /workspaces/.codespaces/.persistedshare/logs && sudo chmod -R 777 /workspaces/.codespaces/.persistedshare/logs"
+	},	
+	"postStartCommand": {
+		"velocitas": "bash .devcontainer/scripts/postStartCommand.sh",
+		"setup-user-env": ["/bin/bash", "-c", "(bash -i ./.devcontainer/scripts/setup-user-env.bash >> /workspaces/.codespaces/.persistedshare/logs/stdout-env.log 2>> /workspaces/.codespaces/.persistedshare/logs/stderr-env.log) || (echo setup-user-env exited with nonzero code)"],
+		"setup-lf": ["/bin/bash", "-c", "(bash ./.devcontainer/scripts/setup-lf.bash nightly >> /workspaces/.codespaces/.persistedshare/logs/stdout-lf.log 2>> /workspaces/.codespaces/.persistedshare/logs/stderr-lf.log) || (echo setup-lf exited with nonzero code)"]
+	},
 	// Comment out connect as root instead. More info: https://aka.ms/vscode-remote/containers/non-root.
-	"remoteUser": "vscode"
+	"remoteUser": "vscode",
+	"remoteEnv": {
+        // Unsure if this is a good idea, as other people might fork this and change name
+        "LF_PATH": "${containerWorkspaceFolder}/lingua-franca",
+        // We must include SDKMAN here, because otherwise node which VSCode uses will disregard new java installed by SDKMAN, LF extension will get confused and use the old version.
+        // Not portable. But what can you do?
+        "PATH": "${containerWorkspaceFolder}/lingua-franca/bin:/home/vscode/.sdkman/candidates/java/current/bin:${containerEnv:PATH}"
+	}
 }
