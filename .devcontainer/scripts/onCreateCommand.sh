@@ -27,7 +27,7 @@ echo "#######################################################"
 # needed to get rid of old leftovers
 sudo rm -rf ~/.velocitas
 velocitas init
-velocitas sync
+# velocitas sync  ## To prevent rollback of devcontainer.json and Dockerfile
 
 echo "#######################################################"
 echo "### Install python requirements                     ###"
