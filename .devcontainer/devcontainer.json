@@ -9,7 +9,9 @@
 		"--privileged"
 	],
 	"containerEnv": {
-		"GITHUB_API_TOKEN": "${localEnv:GITHUB_API_TOKEN}"
+		"GITHUB_API_TOKEN": "${localEnv:GITHUB_API_TOKEN}",
+		"GIT_CONFIG_NAME": "${localEnv:GIT_CONFIG_NAME}",
+		"GIT_CONFIG_EMAIL": "${localEnv:GIT_CONFIG_EMAIL}"
 	},
 	"customizations": {
 		"vscode": {
@@ -18,9 +20,8 @@
 				"python.defaultInterpreterPath": "/usr/bin/python3",
 				"python.analysis.typeCheckingMode": "basic",
 				// Strong Type Checker
-				"python.linting.mypyEnabled": true,
+				"mypy.enabled": true,
 				"mypy.runUsingActiveInterpreter": true,
-				"python.linting.mypyArgs": [],
 				"mypy.targets": [
 					"app"
 				],
@@ -29,9 +30,6 @@
 				"python.linting.banditArgs": [
 					"-c setup.cfg"
 				],
-				// Only Flake8 is used as linter and static code analyzer, as faster tool
-				"python.linting.enabled": true,
-				"python.linting.flake8Enabled": true,
 				// Style Checker for Python Docs
 				"python.linting.pydocstyleEnabled": true,
 				"python.analysis.extraPaths": [
@@ -40,10 +38,12 @@
 				],
 				"python.testing.unittestEnabled": false,
 				"python.testing.pytestEnabled": true,
-				// Style Formatter
-				"python.formatting.provider": "black",
+				"[python]": {
+					// Style Formatter
+					"editor.defaultFormatter": "ms-python.black-formatter"
+				},
 				"vs-kubernetes": {
-					"vscode-kubernetes.kubectl-path.linux": "/usr/bin/kubectl",
+					"vscode-kubernetes.kubectl-path.linux": "/usr/local/bin/kubectl",
 					"vscode-kubernetes.helm-path.linux": "/usr/local/bin/helm"
 				},
 				"terminal.integrated.defaultProfile.linux": "zsh",
@@ -75,13 +75,11 @@
 			},
 			// Add the IDs of extensions you want installed when the container is created.
 			"extensions": [
-				"lf-lang.vscode-lingua-franca",
 				"dbaeumer.vscode-eslint",
 				"ms-azuretools.vscode-dapr",
 				"ms-azuretools.vscode-docker",
 				"ms-python.python",
 				"cschleiden.vscode-github-actions",
-				"pspester.pester-test",
 				"rpdswtk.vsmqtt",
 				"dotjoshjohnson.xml",
 				"ms-kubernetes-tools.vscode-kubernetes-tools",
@@ -89,17 +87,20 @@
 				"augustocdias.tasks-shell-input",
 				"ms-python.isort",
 				"ms-python.flake8",
-				"mhutchie.git-graph"
+				"ms-python.black-formatter",
+				"ms-python.mypy-type-checker",
+				"lf-lang.vscode-lingua-franca"
 			]
 		}
 	},
 	"onCreateCommand": {
-		"velocitas": "bash .devcontainer/scripts/postCreateCommand.sh",
-		"LinguaFranca": "sudo mkdir -p /workspaces/.codespaces/.persistedshare/logs && sudo chmod -R 777 /workspaces/.codespaces/.persistedshare/logs"
-	},	
+		"velocitas": "bash .devcontainer/scripts/onCreateCommand.sh",
+		"lf": "sudo mkdir -p /workspaces/.codespaces/.persistedshare/logs && sudo chmod -R 777 /workspaces/.codespaces/.persistedshare/logs"
+	},
 	"postStartCommand": {
-		"setup-user-env": ["/bin/bash", "-c", "(bash -i ./.devcontainer/scripts/setup-user-env.bash >> /workspaces/.codespaces/.persistedshare/logs/stdout-env.log 2>> /workspaces/.codespaces/.persistedshare/logs/stderr-env.log) || (echo setup-user-env exited with nonzero code)"],
-		"setup-lf": ["/bin/bash", "-c", "(bash ./.devcontainer/scripts/setup-lf.bash nightly >> /workspaces/.codespaces/.persistedshare/logs/stdout-lf.log 2>> /workspaces/.codespaces/.persistedshare/logs/stderr-lf.log) || (echo setup-lf exited with nonzero code)"]
+		"velocitas": "bash .devcontainer/scripts/postStartCommand.sh",
+		"lf-setup-user-env": ["/bin/bash", "-c", "(bash -i ./.devcontainer/scripts/setup-user-env.bash >> /workspaces/.codespaces/.persistedshare/logs/stdout-env.log 2>> /workspaces/.codespaces/.persistedshare/logs/stderr-env.log) || (echo setup-user-env exited with nonzero code)"],
+		"lf-setup": ["/bin/bash", "-c", "(bash ./.devcontainer/scripts/setup-lf.bash nightly >> /workspaces/.codespaces/.persistedshare/logs/stdout-lf.log 2>> /workspaces/.codespaces/.persistedshare/logs/stderr-lf.log) || (echo setup-lf exited with nonzero code)"]
 	},
 	// Comment out connect as root instead. More info: https://aka.ms/vscode-remote/containers/non-root.
 	"remoteUser": "vscode",
