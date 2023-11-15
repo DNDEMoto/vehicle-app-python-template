@@ -21,10 +21,11 @@ ENV PATH=$PATH:/home/vscode/.dapr/bin
 
 ENV DOCKER_BUILDKIT=1
 
-COPY scripts/* /tmp/scripts/
+COPY scripts/*.sh /tmp/scripts/
 RUN find /tmp/scripts/ -type f -iname "*.sh" -exec chmod +x {} \;
 RUN /bin/bash /tmp/scripts/container-set.sh
 RUN /bin/bash /tmp/scripts/configure-proxies.sh
 
 # for LinguaFranca
-RUN  /bin/bash /tmp/scripts/setup-env.bash
+COPY lf-scripts/* /tmp/lf-scripts/
+RUN  /bin/bash /tmp/lf-scripts/setup-env.bash
