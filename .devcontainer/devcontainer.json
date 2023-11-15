@@ -99,8 +99,8 @@
 	},
 	"postStartCommand": {
 		"velocitas": "bash .devcontainer/scripts/postStartCommand.sh",
-		"lf-setup-user-env": ["/bin/bash", "-c", "(bash -i ./.devcontainer/scripts/setup-user-env.bash >> /workspaces/.codespaces/.persistedshare/logs/stdout-env.log 2>> /workspaces/.codespaces/.persistedshare/logs/stderr-env.log) || (echo setup-user-env exited with nonzero code)"],
-		"lf-setup": ["/bin/bash", "-c", "(bash ./.devcontainer/scripts/setup-lf.bash nightly >> /workspaces/.codespaces/.persistedshare/logs/stdout-lf.log 2>> /workspaces/.codespaces/.persistedshare/logs/stderr-lf.log) || (echo setup-lf exited with nonzero code)"]
+		"lf-setup-user-env": ["/bin/bash", "-c", "(bash -i ./.devcontainer/lf-scripts/setup-user-env.bash >> /workspaces/.codespaces/.persistedshare/logs/stdout-env.log 2>> /workspaces/.codespaces/.persistedshare/logs/stderr-env.log) || (echo setup-user-env exited with nonzero code)"],
+		"lf-setup": ["/bin/bash", "-c", "(bash ./.devcontainer/lf-scripts/setup-lf.bash nightly >> /workspaces/.codespaces/.persistedshare/logs/stdout-lf.log 2>> /workspaces/.codespaces/.persistedshare/logs/stderr-lf.log) || (echo setup-lf exited with nonzero code)"]
 	},
 	// Comment out connect as root instead. More info: https://aka.ms/vscode-remote/containers/non-root.
 	"remoteUser": "vscode",
