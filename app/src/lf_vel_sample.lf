@@ -1,0 +1,18 @@
+target Python {
+  keepalive: true, // Do not exit when event queue is empty.
+  files: [speed_app.py]
+}
+main reactor {
+  timer t(0, 100 msec);
+  preamble {=
+    import speed_app
+  =}
+  reaction(startup) {=
+    print("LF Startup")
+  =}
+  
+  reaction(t) {=
+    print("Timer")
+    print("LF Speed{}".format(self.speed_app.get_speed()))
+  =}
+}
