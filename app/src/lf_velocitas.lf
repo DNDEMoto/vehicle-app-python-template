@@ -5,6 +5,7 @@ target Python {
 main reactor {
   timer t(0, 100 msec);
   preamble {=
+    #　別スレッドになるように工夫しないと、一緒に待っちゃうかもしれない
     import speed_app
   =}
   reaction(startup) {=
@@ -13,6 +14,6 @@ main reactor {
   
   reaction(t) {=
     print("Timer")
-    print("LF Speed{}".format(self.speed_app.get_speed()))
+    print("LF Speed: {}".format(self.speed_app.get_speed()))
   =}
 }
