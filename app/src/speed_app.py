@@ -6,6 +6,7 @@ import logging
 import asyncio
 import signal
 
+
 class SpeedApp(VehicleApp):
     """Array Datatype example Vehicle App"""
     speed = 0
@@ -17,20 +18,14 @@ class SpeedApp(VehicleApp):
         return self.speed
     
     def print_values(self, data: DataPointReply):
-        speed = data.get(self.Vehicle.Speed).value
-        print("velocitas: Vehicle Speed: {}".format(speed))
+        self.speed = data.get(self.Vehicle.Speed).value
+        print("velocitas: Vehicle Speed: {}".format(self.speed))
         
     async def on_start(self):
         """Run when the vehicle app starts"""
         await self.Vehicle.Speed.subscribe(self.print_values)
 
-async def main():
-    print("velocitas: speed app main")
-    speed_app = SpeedApp(vehicle)
-    await speed_app.run()
 
-#
-# LOOP = asyncio.get_event_loop()
-# LOOP.add_signal_handler(signal.SIGTERM, LOOP.stop)
-# LOOP.run_until_complete(main())
-# LOOP.close()
+def instantiate() -> SpeedApp:
+    print("velocitas: instantiate SpeedApp")
+    return SpeedApp(vehicle)
