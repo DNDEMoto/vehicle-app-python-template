@@ -1,0 +1,47 @@
+target Python {
+    keepalive: true, // Do not exit when event queue is empty.
+}
+reactor Velocitas {
+    timer t(0, 1000 msec);
+    preamble {=       
+        from sdv.vehicle_app import VehicleApp
+        from vehicle import Vehicle, vehicle
+        from sdv.vdb.reply import DataPointReply
+        import asyncio
+        import threading
+        
+        class DataReader(VehicleApp):
+            def __init__(self, vehicle: Vehicle):
+                super().__init__()
+                self.Vehicle = vehicle
+            
+            def data_input(self, data: DataPointReply):
+                self.speed = data.get(self.Vehicle.Speed).value
+                print("velocitas: Vehicle Speed: {}".format(self.speed))
+
+            async def on_start(self):
+                """Run when the vehicle app starts"""
+                await self.Vehicle.Speed.subscribe(self.data_input)
+
+        def run_asyncio_loop(self):
+            loop = self.asyncio.new_event_loop()
+            self.asyncio.set_event_loop(loop)
+            data_reader = self.DataReader(vehicle)
+            loop.run_until_complete(data_reader.run())
+    =}
+    reaction(startup) {=
+        print("LF Startup")
+        asyncio_thread = self.threading.Thread(target=self.run_asyncio_loop)
+        asyncio_thread.start()
+    =}
+    reaction(t) {=
+        print("LF Timer Event")
+        # Need to check by hasattr, the timing of call by LF runtime, it not be instantiated
+        if hasattr(self,"sa_ins"):
+        print("LF Speed: {}".format(self.sa_ins.get_speed()))
+    =}
+}
+
+main reactor {
+    a = new Velocitas()
+}
