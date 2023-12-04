@@ -6,7 +6,7 @@
 			"detail": "Starts the VehicleApp under development (including Dapr sidecar if middleware type is Dapr)",
 			"type": "shell",
 			"command": [
-				"velocitas exec runtime-local run-vehicle-app --dapr-app-id vehicleapp --dapr-app-port 50008 ${workspaceFolder}/app/bin/lf_vel_sample"
+				"velocitas exec runtime-local run-vehicle-app --dapr-app-id vehicleapp --dapr-app-port 50008 ${workspaceFolder}/app/bin/lf_velocitas"
 			],
 			"presentation": {
 				"close": true,
