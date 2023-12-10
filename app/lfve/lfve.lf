@@ -1,47 +1,49 @@
 target Python {
     keepalive: true, // Do not exit when event queue is empty.
 }
-reactor Velocitas {
-    timer t(0, 1000 msec);
-    preamble {=       
+reactor LFVelocitas {
+    physical action Vehicle_speed
+    logical action test
+    preamble {=
         from sdv.vehicle_app import VehicleApp
         from vehicle import Vehicle, vehicle
-        from sdv.vdb.reply import DataPointReply
         import asyncio
         import threading
-        
-        class DataReader(VehicleApp):
-            def __init__(self, vehicle: Vehicle):
-                super().__init__()
-                self.Vehicle = vehicle
-            
-            def data_input(self, data: DataPointReply):
-                self.speed = data.get(self.Vehicle.Speed).value
-                print("velocitas: Vehicle Speed: {}".format(self.speed))
-
-            async def on_start(self):
-                """Run when the vehicle app starts"""
-                await self.Vehicle.Speed.subscribe(self.data_input)
-
-        def run_asyncio_loop(self):
+    
+        def run_asyncio_loop(self, Vehicle_speed):
             loop = self.asyncio.new_event_loop()
             self.asyncio.set_event_loop(loop)
-            data_reader = self.DataReader(vehicle)
+            data_reader = self.DataReader(self.vehicle, Vehicle_speed)
             loop.run_until_complete(data_reader.run())
+
+        class DataReader(VehicleApp):
+            from vehicle import Vehicle
+            from sdv.vdb.reply import DataPointReply
+            def __init__(self, vehicle: Vehicle, Vehicle_speed):
+                super().__init__()
+                self.vehicle = vehicle
+                self.Vehicle_speed = Vehicle_speed
+        
+            def data_input(self, data: DataPointReply):
+                value = data.get(self.vehicle.Speed).value
+                self.Vehicle_speed.schedule(0, value)
+                print("velocitas: Vehicle Speed: {}".format(value))
+        
+            async def on_start(self):
+                """Run when the vehicle app starts"""
+                await self.vehicle.Speed.subscribe(self.data_input)
     =}
-    reaction(startup) {=
+    reaction(startup) -> Vehicle_speed{=
         print("LF Startup")
-        asyncio_thread = self.threading.Thread(target=self.run_asyncio_loop)
+        asyncio_thread = self.threading.Thread(target=self.run_asyncio_loop, args=(Vehicle_speed,))
         asyncio_thread.start()
     =}
-    reaction(t) {=
-        print("LF Timer Event")
-        # Need to check by hasattr, the timing of call by LF runtime, it not be instantiated
-        if hasattr(self,"sa_ins"):
-        print("LF Speed: {}".format(self.sa_ins.get_speed()))
+    reaction(Vehicle_speed) {=
+        print("LF Event")
+        print("LF Speed: {}".format(Vehicle_speed.value))
     =}
 }
 
 main reactor {
-    a = new Velocitas()
+    a = new LFVelocitas()
 }
