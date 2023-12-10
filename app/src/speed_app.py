@@ -2,10 +2,6 @@
 from sdv.vehicle_app import VehicleApp
 from vehicle import Vehicle, vehicle
 from sdv.vdb.reply import DataPointReply
-import logging
-import asyncio
-import signal
-
 
 class SpeedApp(VehicleApp):
     """Array Datatype example Vehicle App"""

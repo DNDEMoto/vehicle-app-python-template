@@ -1,0 +1,49 @@
+target Python {
+    keepalive: true, // Do not exit when event queue is empty.
+}
+reactor LFVelocitas {
+    physical action Vehicle_speed
+    logical action test
+    preamble {=
+        from sdv.vehicle_app import VehicleApp
+        from vehicle import Vehicle, vehicle
+        import asyncio
+        import threading
+    
+        def run_asyncio_loop(self, Vehicle_speed):
+            loop = self.asyncio.new_event_loop()
+            self.asyncio.set_event_loop(loop)
+            data_reader = self.DataReader(self.vehicle, Vehicle_speed)
+            loop.run_until_complete(data_reader.run())
+
+        class DataReader(VehicleApp):
+            from vehicle import Vehicle
+            from sdv.vdb.reply import DataPointReply
+            def __init__(self, vehicle: Vehicle, Vehicle_speed):
+                super().__init__()
+                self.vehicle = vehicle
+                self.Vehicle_speed = Vehicle_speed
+        
+            def data_input(self, data: DataPointReply):
+                value = data.get(self.vehicle.Speed).value
+                self.Vehicle_speed.schedule(0, value)
+                print("velocitas: Vehicle Speed: {}".format(value))
+        
+            async def on_start(self):
+                """Run when the vehicle app starts"""
+                await self.vehicle.Speed.subscribe(self.data_input)
+    =}
+    reaction(startup) -> Vehicle_speed{=
+        print("LF Startup")
+        asyncio_thread = self.threading.Thread(target=self.run_asyncio_loop, args=(Vehicle_speed,))
+        asyncio_thread.start()
+    =}
+    reaction(Vehicle_speed) {=
+        print("LF Event")
+        print("LF Speed: {}".format(Vehicle_speed.value))
+    =}
+}
+
+main reactor {
+    a = new LFVelocitas()
+}
