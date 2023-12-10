@@ -21,12 +21,12 @@ Simple sample to access VSS data provided by Velocitas
 
 ## Polling sample
 
-* app/src/lf_velocitas_polling/lf_velocitas.lf
+* app/src/lf_velocitas_polling/lf_velocitas_e.lf
 * app/src/lf_velocitas_polling/speed_app.py
 
 ## Event trigger sample
 
-* app/src/lf_velocitas_event/lf_velocitas.lf
+* app/src/lf_velocitas_event/lf_velocitas_p.lf
 
 ### Build and Run
 
