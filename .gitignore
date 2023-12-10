@@ -386,7 +386,7 @@ helm/
 podspec.yaml
 
 # for LinguaFranca
-bin/
+bin
 .DS_Store
 src-gen
 fed-gen/*

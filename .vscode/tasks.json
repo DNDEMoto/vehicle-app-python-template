@@ -2,7 +2,7 @@
 	"version": "2.0.0",
 	"tasks": [
 		{
-			"label": "Local Runtime - Run LF-Velocitas App2",
+			"label": "Local Runtime - Run LF-Velocitas Event App",
 			"detail": "Starts the VehicleApp under development (including Dapr sidecar if middleware type is Dapr)",
 			"type": "shell",
 			"command": [
@@ -15,7 +15,7 @@
 			"problemMatcher": []
 		},
 		{
-			"label": "Local Runtime - Run LF-Velocitas App",
+			"label": "Local Runtime - Run LF-Velocitas Polling App",
 			"detail": "Starts the VehicleApp under development (including Dapr sidecar if middleware type is Dapr)",
 			"type": "shell",
 			"command": [
