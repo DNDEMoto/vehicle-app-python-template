@@ -39,10 +39,17 @@ RUN pip3 install --no-cache-dir pyinstaller==5.9.0 \
     && pip3 install --no-cache-dir -r ./app/requirements-links.txt \
     && pip3 install --no-cache-dir /vehicle_model
 
+# for LinguaFranca
+COPY lf-scripts/* /tmp/lf-scripts/
+RUN  /bin/bash /tmp/lf-scripts/setup-env.bash
+#####################
 WORKDIR /app
 
+
+# for LinguaFranca
 RUN lfc -o dist src/lf_velocitas_event/lf_velocitas_e.lf 
 RUN mv dist/bin/lf_velocitas_e dist/bin/run-exe
+#####################
 # RUN pyinstaller --clean -F -s src/main.py
 #
 # WORKDIR /app/dist
@@ -52,7 +59,9 @@ RUN mv dist/bin/lf_velocitas_e dist/bin/run-exe
 # Runner stage, to copy the executable
 FROM scratch
 
+# for LinguaFranca
 COPY --from=builder ./app/dist/* /dist/
+#####################
 #COPY --from=builder ./app/dist/run-exe /dist/
 
 WORKDIR /tmp
