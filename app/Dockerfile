@@ -41,16 +41,19 @@ RUN pip3 install --no-cache-dir pyinstaller==5.9.0 \
 
 WORKDIR /app
 
-RUN pyinstaller --clean -F -s src/main.py
-
-WORKDIR /app/dist
-
-RUN staticx main run-exe
+RUN lfc -o dist src/lf_velocitas_event/lf_velocitas_e.lf 
+RUN mv dist/bin/lf_velocitas_e dist/bin/run-exe
+# RUN pyinstaller --clean -F -s src/main.py
+#
+# WORKDIR /app/dist
+#
+# RUN staticx main run-exe
 
 # Runner stage, to copy the executable
 FROM scratch
 
-COPY --from=builder ./app/dist/run-exe /dist/
+COPY --from=builder ./app/dist/* /dist/
+#COPY --from=builder ./app/dist/run-exe /dist/
 
 WORKDIR /tmp
 WORKDIR /dist
