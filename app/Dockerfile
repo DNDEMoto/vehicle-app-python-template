@@ -43,6 +43,9 @@ RUN pip3 install --no-cache-dir pyinstaller==5.9.0 \
 RUN apt-get update && apt-get install -y curl zip unzip
 RUN curl -s "https://get.sdkman.io" | bash 
 RUN /bin/bash -c "source $HOME/.sdkman/bin/sdkman-init.sh"
+RUN sdk help
+RUN sdk install java 17.0.7-ms
+RUN sdk use java 17.0.7-ms
 # for LinguaFranca
 COPY ./.devcontainer/lf-scripts/* /tmp/lf-scripts/
 RUN apt-get update && apt-get install -y sudo 
