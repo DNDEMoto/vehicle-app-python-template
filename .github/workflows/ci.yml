@@ -25,6 +25,7 @@ on:
     # Run only on branches/commits and not tags
     branches:
       - main
+      - ci-integ
   pull_request:
     branches:
       - main
