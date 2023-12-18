@@ -40,7 +40,7 @@ RUN pip3 install --no-cache-dir pyinstaller==5.9.0 \
     && pip3 install --no-cache-dir /vehicle_model
 
 # for skdman for LinguaFranca
-RUN apt-get update && apt-get install -y curl
+RUN apt-get update && apt-get install -y curl zip unzip
 RUN curl -s "https://get.sdkman.io" | bash 
 RUN /bin/bash -c "source $HOME/.sdkman/bin/sdkman-init.sh"
 # for LinguaFranca
