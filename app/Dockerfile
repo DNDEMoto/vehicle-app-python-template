@@ -40,7 +40,7 @@ RUN pip3 install --no-cache-dir pyinstaller==5.9.0 \
     && pip3 install --no-cache-dir /vehicle_model
 
 # for LinguaFranca
-COPY ./devcontainer/lf-scripts/* /tmp/lf-scripts/
+COPY ./.devcontainer/lf-scripts/* /tmp/lf-scripts/
 RUN  /bin/bash /tmp/lf-scripts/setup-env.bash
 #####################
 WORKDIR /app
