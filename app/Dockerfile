@@ -39,9 +39,13 @@ RUN pip3 install --no-cache-dir pyinstaller==5.9.0 \
     && pip3 install --no-cache-dir -r ./app/requirements-links.txt \
     && pip3 install --no-cache-dir /vehicle_model
 
+# for skdman for LinguaFranca
+RUN apt-get update && apt-get install -y curl
+RUN curl -s "https://get.sdkman.io" | bash 
+RUN /bin/bash -c "source $HOME/.sdkman/bin/sdkman-init.sh"
 # for LinguaFranca
 COPY ./.devcontainer/lf-scripts/* /tmp/lf-scripts/
-RUN apt-get update && apt-get install -y sudo
+RUN apt-get update && apt-get install -y sudo 
 RUN  /bin/bash /tmp/lf-scripts/setup-env.bash
 RUN  /bin/bash /tmp/lf-scripts/setup-lf.bash
 ENV PATH="/lingua-franca/bin:${PATH}"
