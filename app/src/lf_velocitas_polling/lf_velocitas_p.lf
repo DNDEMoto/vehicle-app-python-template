@@ -8,7 +8,7 @@ main reactor {
     import speed_app
     import asyncio
     import threading
-    def run_asyncio_loop(self):      
+    def run_asyncio_loop(self):
         loop = self.asyncio.new_event_loop()
         self.asyncio.set_event_loop(loop)
         # instantiate velocitas speed app

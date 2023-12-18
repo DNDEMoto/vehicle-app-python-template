@@ -34,5 +34,3 @@ Simple sample to access VSS data provided by Velocitas
 
 1. Press F1 key and select "Tasks:Run Task", and select "Local Runtime - Up" to start the velocitas local runtime including can data stub.
 1. Press F1 key and select "Tasks:Run Task", and select "Local Runtime - Run LF-Velocitas App"
-
-

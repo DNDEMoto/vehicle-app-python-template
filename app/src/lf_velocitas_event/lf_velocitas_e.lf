@@ -9,7 +9,7 @@ reactor LFVelocitas {
         from vehicle import Vehicle, vehicle
         import asyncio
         import threading
-    
+
         def run_asyncio_loop(self, Vehicle_speed):
             loop = self.asyncio.new_event_loop()
             self.asyncio.set_event_loop(loop)
@@ -23,12 +23,12 @@ reactor LFVelocitas {
                 super().__init__()
                 self.vehicle = vehicle
                 self.Vehicle_speed = Vehicle_speed
-        
+
             def data_input(self, data: DataPointReply):
                 value = data.get(self.vehicle.Speed).value
                 self.Vehicle_speed.schedule(0, value)
                 print("velocitas: Vehicle Speed: {}".format(value))
-        
+
             async def on_start(self):
                 """Run when the vehicle app starts"""
                 await self.vehicle.Speed.subscribe(self.data_input)
