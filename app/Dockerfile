@@ -46,6 +46,8 @@ RUN /bin/bash -c "source $HOME/.sdkman/bin/sdkman-init.sh"
 RUN /bin/bash -c "source $HOME/.sdkman/bin/sdkman-init.sh && sdk help"
 RUN /bin/bash -c "source $HOME/.sdkman/bin/sdkman-init.sh && sdk install java 17.0.7-ms"
 RUN /bin/bash -c "source $HOME/.sdkman/bin/sdkman-init.sh && sdk use java 17.0.7-ms"
+ENV JAVA_HOME /root/.sdkman/candidates/java/current
+
 # for LinguaFranca
 COPY ./.devcontainer/lf-scripts/* /tmp/lf-scripts/
 RUN apt-get update && apt-get install -y sudo 
