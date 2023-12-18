@@ -44,9 +44,7 @@ COPY ./.devcontainer/lf-scripts/* /tmp/lf-scripts/
 RUN apt-get update && apt-get install -y sudo
 RUN  /bin/bash /tmp/lf-scripts/setup-env.bash
 RUN  /bin/bash /tmp/lf-scripts/setup-lf.bash
-RUN pwd
-RUN ls -la
-ENV PATH="/lingua-franca:${PATH}"
+ENV PATH="/lingua-franca/bin:${PATH}"
 #####################
 WORKDIR /app
 
