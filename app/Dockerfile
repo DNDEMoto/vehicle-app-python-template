@@ -59,6 +59,7 @@ WORKDIR /app
 
 
 # for LinguaFranca
+RUN mkdir -p /app/dist
 RUN lfc -o dist src/lf_velocitas_event/lf_velocitas_e.lf 
 RUN mv dist/bin/lf_velocitas_e dist/bin/run-exe
 #####################
