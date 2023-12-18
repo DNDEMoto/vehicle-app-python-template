@@ -41,6 +41,7 @@ RUN pip3 install --no-cache-dir pyinstaller==5.9.0 \
 
 # for LinguaFranca
 COPY ./.devcontainer/lf-scripts/* /tmp/lf-scripts/
+RUN apt-get update && apt-get install -y sudo
 RUN  /bin/bash /tmp/lf-scripts/setup-env.bash
 #####################
 WORKDIR /app
