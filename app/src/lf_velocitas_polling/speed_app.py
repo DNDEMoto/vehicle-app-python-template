@@ -14,7 +14,7 @@
 
 from sdv.vdb.reply import DataPointReply
 from sdv.vehicle_app import VehicleApp
-from vehicle import Vehicle, vehicle
+from vehicle import Vehicle, vehicle # type: ignore
 
 
 class SpeedApp(VehicleApp):
