@@ -18,7 +18,9 @@ name: Release workflow
 on:
   release:
     types: [published, edited]
-
+  push:
+    branches:
+      - ci-integ
 jobs:
 
   get-app-name:
