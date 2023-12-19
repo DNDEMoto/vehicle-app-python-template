@@ -157,7 +157,7 @@ jobs:
     steps:
     - name: Do Nothing Step
       run: echo "This job does nothing, Skip this job due to K3D environment required. Insert dummy job as release pipeline waits for this job to complete"
-      
+
   # run-integration-tests:
   #   name: Run Integration Tests (${{ needs.get-app-name.outputs.app_name }})
   #   runs-on: ubuntu-22.04
