@@ -30,9 +30,9 @@ Simple sample to access VSS data provided by Velocitas
 
 ### Build and Run
 
-1. Execute the following command to generate the LF executable: `lfc app/src/lf_velocitas_event/lf_velocitas.lf`
+1. Execute the following command to generate the LF executable: `lfc app/src/lf_velocitas_event/lf_velocitas_e.lf`
 
 1. Press F1 key and select "Tasks:Run Task", and select "Local Runtime - Up" to start the velocitas local runtime including can data stub.
-1. Press F1 key and select "Tasks:Run Task", and select "Local Runtime - Run LF-Velocitas App"
+1. Press F1 key and select "Tasks:Run Task", and select "Local Runtime - Run LF-Velocitas Event App"
 
 
