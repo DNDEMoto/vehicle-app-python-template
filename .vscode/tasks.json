@@ -104,7 +104,7 @@
 			"label": "Pre Commit Action",
 			"detail": "Perform checking/formating of the code",
 			"type": "shell",
-			"command": "pre-commit run --show-diff-on-failure --color=always --all-files",
+			"command": "/home/vscode/.local/bin/pre-commit run --show-diff-on-failure --color=always --all-files",
 			"group": "none",
 			"isBackground": false,
 			"problemMatcher": []
