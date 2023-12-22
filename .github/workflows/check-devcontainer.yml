@@ -21,7 +21,7 @@ on:
     # Run only on branches/commits and not tags
     branches:
       - main
-      - ci-iteg-devcontainer
+      - ci-iteng-devcontainer
   pull_request:
     branches:
       - main
