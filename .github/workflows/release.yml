@@ -20,7 +20,6 @@ on:
     types: [published, edited]
 
 jobs:
-
   get-app-name:
     runs-on: ubuntu-22.04
     name: Get App-Name

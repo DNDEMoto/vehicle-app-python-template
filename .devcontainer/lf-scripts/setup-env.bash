@@ -24,7 +24,7 @@ for arg in "$@"; do
         '--no-setup-network') SETUP_NETWORK=false;;
         '--no-setup-ros') SETUP_ROS=false;;
         '--ros-no-use-official-repo') ROS_USE_OFFICIAL_REPO=false;;
-        '--debug') set -x;; 
+        '--debug') set -x;;
     esac
 done
 
@@ -37,13 +37,13 @@ sudo apt-get install --assume-yes \
     rustc cargo \
     libprotobuf-dev libprotobuf-c-dev protobuf-c-compiler protobuf-compiler python3-protobuf \
     protobuf-compiler-grpc libgrpc-dev libgrpc++-dev gnuplot
-    
+
 python3 -m pip install --upgrade pip
 # Install python dependencies and
 # latest CMake; see https://www.kitware.com/cmake-python-wheels/ https://askubuntu.com/a/1070770
 sudo python3 -m pip install --exists-action i requests setuptools cmake
 
-if [ $SETUP_NETWORK = true ]; then 
+if [ $SETUP_NETWORK = true ]; then
     # Install support for protocol buffers
     sudo apt-get install --assume-yes \
         libprotobuf-dev libprotobuf-c-dev protobuf-c-compiler protobuf-compiler \
@@ -67,7 +67,7 @@ fi
 if [ $SETUP_ROS = true ]; then
     if [ $ROS_USE_OFFICIAL_REPO = true ]; then
         echo "If you are running this script to setup LF environment yourself, we recommend that you install ROS2 yourself."
-        
+
         OS_VERSION_CODENAME=$(\. /etc/os-release && echo "${VERSION_CODENAME}")
         OS_ID="$(\. /etc/os-release && echo "${ID}")"
         OS_VERSION_ID="$(\. /etc/os-release && echo "${VERSION_ID}")"
@@ -85,20 +85,20 @@ if [ $SETUP_ROS = true ]; then
             # http://docs.ros.org/en/iron/Installation/Ubuntu-Install-Debians.html
             sudo apt-get install --assume-yes software-properties-common locales
 
-            if ! (locale | grep -e 'utf8' -e 'UTF-8') >/dev/null 2>&1; then 
+            if ! (locale | grep -e 'utf8' -e 'UTF-8') >/dev/null 2>&1; then
                 sudo locale-gen C.UTF-8
                 sudo update-locale LC_ALL=C.UTF-8 LANG=C.UTF-8
-                export LANG=C.UTF-8 
+                export LANG=C.UTF-8
             fi
 
             # Check if Ubuntu by getting ubuntu codename first
-            if [ "${OS_ID}" != "ubuntu" ] ; then 
+            if [ "${OS_ID}" != "ubuntu" ] ; then
                 echo "This script has only been tested on ubuntu. Proceed with caution."
             else
-                # On Ubuntu, we need to add universe; 
+                # On Ubuntu, we need to add universe;
                 sudo add-apt-repository universe --yes
             fi
-            
+
             sudo curl -sSL https://raw.githubusercontent.com/ros/rosdistro/master/ros.key -o /usr/share/keyrings/ros-archive-keyring.gpg
             echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/ros-archive-keyring.gpg] http://packages.ros.org/ros2/ubuntu ${OS_VERSION_CODENAME} main" | sudo tee /etc/apt/sources.list.d/ros2.list > /dev/null
             sudo apt-get update
@@ -106,7 +106,7 @@ if [ $SETUP_ROS = true ]; then
             # Check https://unix.stackexchange.com/a/156326
             echo "$(set -- /opt/ros/*/setup.bash; printf "\. %s" "$1")" >> ~/.bashrc
             realpath ~/.bashrc
-        else 
+        else
             echo "Your OS version is too old; please consider upgrading or installing ROS yourself."
         fi
     else

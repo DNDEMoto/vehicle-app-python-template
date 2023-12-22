@@ -37,7 +37,7 @@ install_nvm(){
         set +ux
         [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
         set -ux
-    else 
+    else
         echo "::step:: nvm not found. Installing"
         set +ux
         curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.3/install.sh | bash
@@ -62,7 +62,7 @@ setup_ros(){
     fi
 }
 
-install_sdk & 
+install_sdk &
 install_nvm &
 setup_ros
 wait

@@ -39,18 +39,43 @@ RUN pip3 install --no-cache-dir pyinstaller==5.9.0 \
     && pip3 install --no-cache-dir -r ./app/requirements-links.txt \
     && pip3 install --no-cache-dir /vehicle_model
 
+# for skdman for LinguaFranca
+RUN apt-get update && apt-get install -y curl zip unzip
+RUN curl -s "https://get.sdkman.io" | bash
+RUN /bin/bash -c "source $HOME/.sdkman/bin/sdkman-init.sh"
+RUN /bin/bash -c "source $HOME/.sdkman/bin/sdkman-init.sh && sdk help"
+RUN /bin/bash -c "source $HOME/.sdkman/bin/sdkman-init.sh && sdk install java 17.0.7-ms"
+RUN /bin/bash -c "source $HOME/.sdkman/bin/sdkman-init.sh && sdk use java 17.0.7-ms"
+ENV JAVA_HOME /root/.sdkman/candidates/java/current
+
+# for LinguaFranca
+COPY ./.devcontainer/lf-scripts/* /tmp/lf-scripts/
+RUN apt-get update && apt-get install -y sudo
+RUN  /bin/bash /tmp/lf-scripts/setup-env.bash
+RUN  /bin/bash /tmp/lf-scripts/setup-lf.bash
+ENV PATH="/lingua-franca/bin:${PATH}"
+#####################
 WORKDIR /app
 
-RUN pyinstaller --clean -F -s src/main.py
 
-WORKDIR /app/dist
-
-RUN staticx main run-exe
+# for LinguaFranca
+RUN mkdir -p /app/dist
+RUN lfc -o dist src/lf_velocitas_event/lf_velocitas_e.lf
+RUN mv dist/bin/lf_velocitas_e dist/bin/run-exe
+#####################
+# RUN pyinstaller --clean -F -s src/main.py
+#
+# WORKDIR /app/dist
+#
+# RUN staticx main run-exe
 
 # Runner stage, to copy the executable
 FROM scratch
 
-COPY --from=builder ./app/dist/run-exe /dist/
+# for LinguaFranca
+COPY --from=builder ./app/dist/* /dist/
+#####################
+#COPY --from=builder ./app/dist/run-exe /dist/
 
 WORKDIR /tmp
 WORKDIR /dist
