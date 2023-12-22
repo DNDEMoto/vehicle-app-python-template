@@ -18,11 +18,8 @@ name: Release workflow
 on:
   release:
     types: [published, edited]
-  push:
-    branches:
-      - ci-integ
-jobs:
 
+jobs:
   get-app-name:
     runs-on: ubuntu-22.04
     name: Get App-Name
